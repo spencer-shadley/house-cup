@@ -64,3 +64,6 @@ typings/
 
 # package-lock.json
 package-lock.json
+
+# build output
+client/build*
