@@ -1,5 +1,5 @@
 body{
-    background:#232323;
+    background:linear-gradient(90deg, rgba(41,29,79,1) 16%, rgba(183,165,122,1) 79%);
     font-family:'Montserrat', Helvetica, sans-serif;
 }
 p{
