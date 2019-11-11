@@ -5,7 +5,7 @@ const mongojs = require("mongojs");
 const ObjectId = require("mongodb").ObjectID;
 require('dotenv').config();
 const PORT = process.env.PORT || 3001;
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -181,17 +181,17 @@ app.post("/api/auth", (req, res) => {
       if (!results[0]) {
         res.json({ success: false });
       } else {
-        // bcrypt.compare(req.body.password, results[0].password, function (err, result) {
-        //   if (err) throw err;
-        //   if (result === true) {
-        //     const token = makeToken(req.body.user);
-        //     res.json({ success: true, token: token, user: req.body.user });
-        //   } else if (result === false) {
-        //     res.json({ success: false });
-        //   } else {
-        //     res.json({ success: false });
-        //   }
-        // });
+        bcrypt.compare(req.body.password, results[0].password, function (err, result) {
+          if (err) throw err;
+          if (result === true) {
+            const token = makeToken(req.body.user);
+            res.json({ success: true, token: token, user: req.body.user });
+          } else if (result === false) {
+            res.json({ success: false });
+          } else {
+            res.json({ success: false });
+          }
+        });
         // Fallback to using password in env because bcrypt won't work on Heroku right now
         if(process.env.PASS === req.body.password) {
             const token = makeToken(req.body.user);
@@ -240,11 +240,11 @@ app.post("/api/validate", (req, res) => {
 
 // HASHING ROUTE
 // Uncomment this to make the hash function available for making new users
-// app.post("/api/hash", (req, res) => {
-//   bcrypt.hash(req.body.password, 10, function(err, hash) {
-//     res.json({ hash: hash });
-//   });
-// });
+app.post("/api/hash", (req, res) => {
+  bcrypt.hash(req.body.password, 10, function(err, hash) {
+    res.json({ hash: hash });
+  });
+});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));

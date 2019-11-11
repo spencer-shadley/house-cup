@@ -44,7 +44,7 @@ class Home extends Component {
         return (
             <div className="container-fluid">
                 <div className="row mx-5 my-5">
-                    <h1 className="title"><span className="mr-2"><img className="school-logo-image" src="./img/school-logo.png" alt="Georgia Tech" /></span> Coding Bootcamp House Points</h1>
+                    <h1 className="title"><span className="mr-2"><img className="school-logo-image" src="./img/uw-logo.jpg" alt="University of Washington" /></span> Coding Bootcamp House Points</h1>
                 </div>
                 {/* <div className="row mx-xl-5 mx-sm-1 mt-2">
                     <div className="col-12">
@@ -65,7 +65,6 @@ class Home extends Component {
                                 <div className="card-body">
                                     <p><img className="houseImage" height="200" src={item.owl ? `img/${item.owlimage}` : `img/${item.image}`} alt={item.house} /></p>
                                     <h5 className="houseName">{item.house}</h5>
-                                    <h6 className="houseMaster mb-2 text-muted">House Master: {item.master}</h6>
                                     <h1 className="housePoints">{item.points}</h1>
                                     <hr />
                                     <h2 className="houseWeekPoints">Points this week: <strong>{item.weekpoints}</strong></h2>
