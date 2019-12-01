@@ -11,18 +11,19 @@ class Home extends Component {
     getData = () => {
         API.getPoints()
             .then(res => {
-                const data = res.data.sort((a,b) => {
-                    if (a.points > b.points)
-                        return -1;
-                    if (a.points < b.points)
-                        return 1;
-                    return 0;
-                });
+                const data = res.data.sort((a, b) =>
+                    this.getNormalizedPoints(b) - this.getNormalizedPoints(a));
                 this.setState({
                     data: data
                 });
             })
             .catch(err => console.log(err));
+    }
+
+    getNormalizedPoints(houseData) {
+        const totalClassSize = 29;
+        const numHouses = 4;
+        return (totalClassSize / houseData.num_members / numHouses * houseData.points).toFixed();
     }
 
     componentWillMount() {
@@ -61,13 +62,13 @@ class Home extends Component {
                                     <div className="card-header text-center">
                                         <span role="img" aria-label="Trophy">🏆</span> {item.house} is Currently in First Place <span role="img" aria-label="Trophy">🏆</span>
                                     </div>
-                                ) : "" }
+                                ) : ""}
                                 <div className="card-body">
                                     <p><img className="houseImage" height="200" src={item.owl ? `img/${item.owlimage}` : `img/${item.image}`} alt={item.house} /></p>
                                     <h5 className="houseName">{item.house}</h5>
                                     <h1 className="housePoints">{item.points}</h1>
                                     <hr />
-                                    <h2 className="houseWeekPoints">Points this week: <strong>{item.weekpoints}</strong></h2>
+                                    <h2 className="houseWeekPoints">Normalized points: <strong>{this.getNormalizedPoints(item)}</strong></h2>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +80,7 @@ class Home extends Component {
                 <nav className="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
                     <span className="text-white">
                         <strong>
-                            <span role="img" aria-label="badge">🎖 How can I earn points for the house cup?</span>
+                            <span role="img" aria-label="badge">🎖 How can I earn points for the house cup? </span>
                         </strong>
                         <a href="https://arronjlinton.github.io/HouseCupPoints/" target="_blank" rel='noreferrer noopener'>
                             Click here to find out
